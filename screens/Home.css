@@ -1,0 +1,101 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    padding: 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .location span {
+    display: block;
+  }
+  
+  .notification {
+    position: relative;
+  }
+  
+  .bell-icon {
+    font-size: 24px;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .search-icon,
+  .filter-icon {
+    font-size: 20px;
+    margin: 0 10px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .category-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .category-button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .category-button span {
+    margin-left: 10px;
+  }
+  
+  .category-button.active {
+    background-color: #61dafb;
+  }
+  
+  .food-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .food-item {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+  }
+  
+  .App-footer {
+    background-color: #282c34;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer-icon {
+    font-size: 24px;
+  }
+  

@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice';
-import todoReducer from './todoSlice';
+import profileReducer from './slices/profileSlice';
+import cartReducer from './slices/cartSlice';
+import appReducer from './slices/appSlice';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    auth: authReducer,
-    todos: todoReducer,
+    profile: profileReducer,
+    cart: cartReducer,
+    app: appReducer,
   },
 });
+
+export default store;
