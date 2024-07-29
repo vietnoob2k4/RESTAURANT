@@ -1,7 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectLocation, selectFoodCategory, setFoodCategory } from '../redux/slices/appSlice';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import Swiper from 'react-native-swiper';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -11,6 +14,12 @@ const HomeScreen = () => {
   const handleCategoryClick = (category) => {
     dispatch(setFoodCategory(category));
   };
+
+  const swiperItems = [
+    'https://www.shutterstock.com/image-vector/delicious-homemade-burger-splashing-cola-600nw-1805776183.jpg',
+    'https://i.ytimg.com/vi/y0qgcvmfg_4/maxresdefault.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7h4LsJuWzvLW5ZSo4oec0wTfAobs6mapOfQ&s'
+  ];
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -59,18 +68,20 @@ const HomeScreen = () => {
           </TouchableOpacity>
           {/* Add more categories here if needed */}
         </ScrollView>
-        <ScrollView horizontal={true} style={styles.imageScrollContainer} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity style={styles.imageContainer}>
-            <Image source={{ uri: 'https://www.shutterstock.com/image-vector/delicious-homemade-burger-splashing-cola-600nw-1805776183.jpg' }} style={styles.swipeImage} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.imageContainer}>
-            <Image source={{ uri: 'https://i.ytimg.com/vi/y0qgcvmfg_4/maxresdefault.jpg' }} style={styles.swipeImage} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.imageContainer}>
-            <Image source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7h4LsJuWzvLW5ZSo4oec0wTfAobs6mapOfQ&s' }} style={styles.swipeImage} />
-          </TouchableOpacity>
-          {/* Add more images here if needed */}
-        </ScrollView>
+        <View style={styles.carouselContainer}>
+          <Swiper
+            style={styles.swiper}
+            dot={<View style={styles.dot} />}
+            activeDot={<View style={styles.activeDot} />}
+            paginationStyle={styles.pagination}
+          >
+            {swiperItems.map((item, index) => (
+              <View key={index} style={styles.slide}>
+                <Image source={{ uri: item }} style={styles.swipeImage} />
+              </View>
+            ))}
+          </Swiper>
+        </View>
         <View style={styles.middleText}>
           <Text style={styles.popularItemsText}>Popular items</Text>
           <TouchableOpacity><Text style={styles.ViewAllText}>View All</Text></TouchableOpacity>
@@ -101,32 +112,42 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  imageScrollContainer: {
+  carouselContainer: {
     marginTop: -5,
     marginVertical: 20,
-    height: 150, // Adjust the height of the swipeable image container
+    height: 200,
+    
   },
-  imageContainer: {
-    marginHorizontal: 5,
-    width: 290,
+  swiper: {
+    height: '100%',
+    
+  },
+  slide: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    
   },
   swipeImage: {
-    width: 280, // Adjust the width of each image
-    height: 150, // Adjust the height of each image
+    width: screenWidth, // Full width of the screen
+    height: '100%',
     borderRadius: 10,
   },
-  middleText: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 10,
+  dot: {
+    backgroundColor: '#fff',
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 3,
   },
-  popularItemsText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+  activeDot: {
+    backgroundColor: '#61dafb',
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 3,
   },
-  ViewAllText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+  pagination: {
+    bottom: 10,
   },
   profileImage: {
     width: 40,
@@ -147,12 +168,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafad2',
     paddingHorizontal: 20,
     paddingTop: 25,
-    paddingBottom: 50, // Increased padding to cover half of the search bar's height
+    paddingBottom: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottomLeftRadius: 15, // Added border radius for rounded effect
-    borderBottomRightRadius: 15, // Added border radius for rounded effect
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   location: {
     flexDirection: 'column',
@@ -167,70 +188,81 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   notification: {
-    position: 'relative',
+    padding: 10,
   },
   searchBar: {
-    marginTop: -14,
+    backgroundColor: '#4a90e2',
+    borderRadius: 20,
+    padding: 5,
+    marginVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20,
+    marginTop:-20,
+    marginLeft:10,
+    marginRight:10
   },
   searchInput: {
     flex: 1,
-    padding: 10,
-    fontSize: 16,
-    backgroundColor: '#0000FF', // Blue background color
-    color: '#fff', // White text color
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 25, // Rounded corners
-    marginHorizontal: 5,
+    paddingHorizontal: 10,
+    height: 40,
+    
   },
   categoryContainer: {
-    marginTop: -5,
-    marginVertical: 20,
+    flexDirection: 'row',
+    height:100,
+    marginTop:10,
+    marginBottom:30,
+    marginLeft:10,
+    marginRight:10,
   },
   categoryButton: {
-    backgroundColor: '#f0f0f0',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 20,
+    marginRight: 10,
     alignItems: 'center',
-    width: 80,
-    height: 100,
-    marginHorizontal: 5, // Add margin between categories
-  },
-  categoryIcon: {
-    fontSize: 30,
-    marginBottom: 5,
+    backgroundColor:'#fafad2',
+    width:80,
   },
   categoryText: {
-    fontSize: 14,
-    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  categoryIcon: {
+    fontSize: 24,
   },
   activeCategory: {
     backgroundColor: '#61dafb',
   },
+  middleText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  popularItemsText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  ViewAllText: {
+    color: '#61dafb',
+  },
   popularItems: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
-    marginTop: 20,
-
   },
   popularItem: {
-    width: '48%',
-    borderRadius: 10,
-    overflow: 'hidden',
+    width: (screenWidth - 40) / 2,
+    marginRight: 10,
   },
   popularItemImage: {
     width: '100%',
     height: 100,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   popularItemText: {
     textAlign: 'center',
-    marginTop: 5,
+    fontWeight: 'bold',
   },
 });
 
 export default HomeScreen;
+
